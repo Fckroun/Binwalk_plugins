@@ -9,12 +9,12 @@ class FUBIFSExtractor(binwalk.core.plugin.Plugin):
             filename = result.file.name
             out_filename = filename + ".ubirootfs"
             print(filename)
-            cmd1 = f"ubireader_extract_images {filename} -o {out_filename}"
+            cmd1 = f"ubireader_extract_images \"{filename}\" -o \"{out_filename}\""
             subprocess.call(cmd1, shell=True)
             directory = out_filename
             for subdir, dirs, files in os.walk(directory):
                 for i in files:
                     if 'rootfs' in i :
-                        cmd2 = f"binwalk -Me {os.path.join(subdir, i)}"
+                        cmd2 = f"binwalk -Me \"{os.path.join(subdir, i)}\""
                         subprocess.call(cmd2, shell=True)
                         exit(0)

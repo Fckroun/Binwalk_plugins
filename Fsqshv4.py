@@ -14,8 +14,7 @@ class Fsqshv4be(binwalk.core.plugin.Plugin):
     def extractor(self, fname):
         fname = os.path.abspath(fname)
         outfile = os.path.splitext(fname)[0]
-        print("EXTRACTOR!!")
+        print("***** Fsqshv4be ******")
         cmd1 = f"/bin/sasquatch-v4be -f -d \"{outfile}\"  \"{fname}\""
-        print(cmd1)
         subprocess.call(cmd1, shell=True)
         return True

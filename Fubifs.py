@@ -1,7 +1,7 @@
 import binwalk.core.plugin
 import subprocess,os
 
-class FUBIFSExtractor(binwalk.core.plugin.Plugin):
+class FUBIFS(binwalk.core.plugin.Plugin):
     MODULES = ['Signature']
     def scan(self, result):
         if result.valid and result.description.startswith("UBI erase"):

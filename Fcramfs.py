@@ -1,14 +1,20 @@
+import os
+import subprocess
 import binwalk.core.plugin
-import subprocess,os
 
 class Fcramfs(binwalk.core.plugin.Plugin):
     MODULES = ['Signature']
-    def scan(self, result):
-        if result.valid and result.description.startswith("CramFS filesystem, big endian"):
-            offset = result.offset
-            filename = result.file.name
-            out_filename = filename + ".cramrootfs"
-            print("***** FCRAMFS ******")
-            cmd1 = f"7z x \"{filename}\" -o\"{out_filename}\""
-            subprocess.call(cmd1, shell=True)
-            exit(0)
+    def init(self):
+        if self.module.extractor.enabled:
+            self.module.extractor.add_rule(txtrule=None,
+                                           regex=".*cramfs filesystem, big endian,.*",
+                                           extension="cramfs",
+                                           cmd=self.extractor)
+
+    def extractor(self, fname):
+        fname = os.path.abspath(fname)
+        outfile = os.path.splitext(fname)[0]
+        cmd1 = f"7z x \"{fname}\" -o\"{outfile}\""
+        print(cmd1)
+        subprocess.call(cmd1, shell=True)
+        return True

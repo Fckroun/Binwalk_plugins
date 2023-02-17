@@ -15,6 +15,6 @@ class FUBIFSExtractor(binwalk.core.plugin.Plugin):
             for subdir, dirs, files in os.walk(directory):
                 for i in files:
                     if 'rootfs' in i :
-                        cmd2 = f"binwalk -Me \"{os.path.join(subdir, i)}\""
+                        cmd2 = f"binwalk -Me --run-as=root \"{os.path.join(subdir, i)}\""
                         subprocess.call(cmd2, shell=True)
                         exit(0)

@@ -8,7 +8,7 @@ class Fcramfs(binwalk.core.plugin.Plugin):
             offset = result.offset
             filename = result.file.name
             out_filename = filename + ".cramrootfs"
-            print(filename)
+            print("***** FCRAMFS ******")
             cmd1 = f"7z x \"{filename}\" -o\"{out_filename}\""
             subprocess.call(cmd1, shell=True)
             exit(0)
